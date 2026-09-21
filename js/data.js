@@ -58,14 +58,15 @@ const BARBERS = [
 const GALLERY = [
   { id: 'g1', category: 'hair', icon: 'wolf', photo: 'assets/gallery/modern-mullet.jpg', title: 'Вульф-кат / модерн-маллет', desc: 'Многослойная стрижка с рваными краями и объёмом на макушке.' },
   { id: 'g2', category: 'hair', icon: 'fade', photo: 'assets/gallery/curly-fade-beard.jpg', title: 'Текстурный фейд с бородой', desc: 'Кудрявый объём сверху, чистый фейд по бокам и оформленная борода.' },
-  { id: 'g3', category: 'beard', icon: 'razor', title: 'Королевское бритьё', desc: 'Гладкая кожа, опасная бритва и уход горячим полотенцем.' },
-  { id: 'g4', category: 'hair', icon: 'korean', title: 'Корейская укладка', desc: 'Мягкая чёлка и естественный объём без укладки феном.' },
+  { id: 'g3', category: 'beard', icon: 'razor', photo: 'assets/gallery/razor-shave.jpg', title: 'Королевское бритьё', desc: 'Гладкая кожа, опасная бритва и уход горячим полотенцем.' },
+  { id: 'g4', category: 'hair', icon: 'korean', photo: 'assets/gallery/korean-cut.jpg', title: 'Корейская укладка', desc: 'Мягкая чёлка и естественный объём без укладки феном.' },
   { id: 'g5', category: 'hair', icon: 'anime', photo: 'assets/gallery/anime-dark.jpg', title: 'Аниме-образ с тёмными прядями', desc: 'Острая текстура и глубокий тон в аниме-стилистике.' },
   { id: 'g6', category: 'hair', icon: 'anime', photo: 'assets/gallery/anime-fringe.jpg', title: 'Аниме-стрижка с чёлкой', desc: 'Длинная асимметричная чёлка и драматичная текстура прядей.' },
   { id: 'g7', category: 'hair', icon: 'bald', photo: 'assets/gallery/bald-fade.jpg', title: 'Лысина под бритву', desc: 'Идеально гладкая кожа головы и уход после бритья.' },
   { id: 'g8', category: 'beard', icon: 'beard-hot', title: 'Борода с камуфляжем седины', desc: 'Аккуратная форма и естественный тон без седины.' },
   { id: 'g9', category: 'hair', icon: 'crop', photo: 'assets/gallery/classic-part.jpg', title: 'Классический пробор', desc: 'Аккуратная укладка на бок для делового образа.' },
   { id: 'g10', category: 'kids', icon: 'kids', photo: 'assets/gallery/kids-fade.jpg', title: 'Детская стрижка с фейдом', desc: 'Аккуратный низкий фейд и текстурная макушка для мальчика.' },
+  { id: 'g11', category: 'hair', icon: 'fade', photo: 'assets/gallery/taper-fade-beard.jpg', title: 'Фейд с бородой', desc: 'Высокий фейд с чёткой линией роста волос и плотной бородой.' },
 ];
 
 const GALLERY_CATEGORIES = [

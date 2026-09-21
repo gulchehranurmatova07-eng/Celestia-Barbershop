@@ -657,6 +657,35 @@
     return 'CEL-' + Math.floor(100000 + Math.random() * 900000);
   }
 
+  function sendTelegramNotification(bookingId){
+    if (!TELEGRAM_NOTIFY.botToken || !TELEGRAM_NOTIFY.chatId) return; // не настроено — просто пропускаем
+    const barber = BARBERS.find(b => b.id === booking.barberId);
+    const list = selectedServicesList().map(s => s.name).join(', ');
+    const d = booking.date ? new Date(booking.date + 'T00:00:00') : null;
+    const dateLabel = d ? `${d.getDate()} ${MON[d.getMonth()]} (${DOW[d.getDay()]})` : '—';
+    const text = [
+      '🔔 Новая запись в CELESTIA!',
+      `Мастер: ${barber ? barber.name : '—'}`,
+      `Услуги: ${list || '—'}`,
+      `Дата и время: ${dateLabel} в ${booking.time}`,
+      `Клиент: ${booking.name}`,
+      `Телефон: ${booking.phone}`,
+      booking.comment ? `Комментарий: ${booking.comment}` : null,
+      `Итого: ${formatSum(totalPrice())}`,
+      `Номер записи: ${bookingId}`,
+    ].filter(Boolean).join('\n');
+
+    const url = `https://api.telegram.org/bot${TELEGRAM_NOTIFY.botToken}/sendMessage`;
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_NOTIFY.chatId, text }),
+    }).catch(() => {
+      // Тихо игнорируем сбой сети — клиент уже увидел подтверждение записи,
+      // уведомление владельцу не должно ломать сценарий бронирования.
+    });
+  }
+
   function downloadIcs(bookingId){
     const d = new Date(booking.date + 'T' + booking.time + ':00');
     const end = new Date(d.getTime() + totalDuration() * 60000);
@@ -756,6 +785,7 @@
       const bookingId = generateBookingId();
       $('#successBookingId').textContent = bookingId;
       renderSummary('#successSummary', bookingId);
+      sendTelegramNotification(bookingId);
       const totalWaiting = queueState.reduce((s, q) => s + q.waiting + (q.busy ? 1 : 0), 0);
       $('#successQueue').innerHTML = `Ваша позиция в очереди на выбранное время: <b>#${totalWaiting + 1}</b>. Мы пришлём подтверждение на номер <b>${booking.phone}</b>.`;
       $('#bookingConfirmView').hidden = true;

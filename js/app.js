@@ -795,11 +795,18 @@
 
   function galleryIcon(name){ return serviceIcon(name); }
 
+  function galleryVisualHTML(item){
+    if (item.photo){
+      return `<img src="${item.photo}" alt="${item.title}" loading="lazy">`;
+    }
+    return `<svg class="icon"><use href="#${galleryIcon(item.icon)}"/></svg>`;
+  }
+
   function galleryCardHTML(item){
     const catLabel = GALLERY_CATEGORIES.find(c => c.id === item.category);
     return `
-      <div class="gallery-card" data-id="${item.id}">
-        <div class="gallery-card__visual"><svg class="icon"><use href="#${galleryIcon(item.icon)}"/></svg></div>
+      <div class="gallery-card${item.photo ? ' has-photo' : ''}" data-id="${item.id}">
+        <div class="gallery-card__visual">${galleryVisualHTML(item)}</div>
         <button class="gallery-card__zoom" aria-label="Открыть"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
         <div class="gallery-card__overlay">
           <span class="gallery-card__cat">${catLabel ? catLabel.label : ''}</span>
@@ -841,7 +848,8 @@
   function renderLightbox(){
     const item = galleryFiltered[lightboxIndex];
     if (!item) return;
-    $('#lightboxVisual').innerHTML = `<svg class="icon"><use href="#${galleryIcon(item.icon)}"/></svg>`;
+    $('#lightboxVisual').innerHTML = galleryVisualHTML(item);
+    $('#lightboxVisual').classList.toggle('has-photo', !!item.photo);
     $('#lightboxTitle').textContent = item.title;
     $('#lightboxDesc').textContent = item.desc;
   }

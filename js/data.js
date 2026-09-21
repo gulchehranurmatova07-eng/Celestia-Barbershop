@@ -26,7 +26,7 @@ const BUSINESS = {
       отправляться в Telegram (остальной сайт продолжит работать как обычно).
 ------------------------------------------------------------------------- */
 const TELEGRAM_NOTIFY = {
-  botToken: '', // например: '123456789:AAExampleTokenHere'
+  botToken: '8729365962:AAGc9e5J3IBMs9-PjrEGFGkV7neiXUfe8l8',
   chatId: '',   // например: '123456789'
 };
 

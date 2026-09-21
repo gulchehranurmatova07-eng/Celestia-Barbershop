@@ -675,12 +675,15 @@
       `Номер записи: ${bookingId}`,
     ].filter(Boolean).join('\n');
 
-    const url = `https://api.telegram.org/bot${TELEGRAM_NOTIFY.botToken}/sendMessage`;
-    fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TELEGRAM_NOTIFY.chatId, text }),
-    }).catch(() => {
+    // GET с параметрами в строке запроса (без кастомных заголовков и без
+    // JSON-тела), чтобы браузер не отправлял CORS preflight (OPTIONS), который
+    // Telegram Bot API не обрабатывает — с POST+JSON сообщение вообще не
+    // доходило до сервера. mode:'no-cors' означает, что мы не читаем ответ
+    // (он будет "непрозрачным"), но сам запрос гарантированно уходит на сервер
+    // и Telegram доставляет сообщение независимо от того, видит ли его наш JS.
+    const params = new URLSearchParams({ chat_id: TELEGRAM_NOTIFY.chatId, text });
+    const url = `https://api.telegram.org/bot${TELEGRAM_NOTIFY.botToken}/sendMessage?${params.toString()}`;
+    fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {
       // Тихо игнорируем сбой сети — клиент уже увидел подтверждение записи,
       // уведомление владельцу не должно ломать сценарий бронирования.
     });

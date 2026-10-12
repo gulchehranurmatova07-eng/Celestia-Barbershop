@@ -927,53 +927,79 @@
   ---------------------------------------------------------------------- */
   const ANGLE_LABELS = { front: 'Спереди', side: 'Сбоку', back: 'Сзади' };
   const ANGLE_STYLES = GALLERY.filter(g => g.angles);
-  let currentAngleStyleId = ANGLE_STYLES[0] ? ANGLE_STYLES[0].id : null;
+  let currentAngleStyleId = null;
   let currentAngle = 'front';
 
-  function renderAnglePicker(){
-    $('#anglesPicker').innerHTML = ANGLE_STYLES.map(s => `
-      <button type="button" class="angle-thumb${s.id === currentAngleStyleId ? ' is-active' : ''}" data-id="${s.id}">
-        <img src="${s.angles.front}" alt="${s.title}" loading="lazy">
-        <span>${s.title}</span>
-      </button>`).join('');
+  function angleCardHTML(s){
+    return `
+      <article class="angle-card" data-id="${s.id}">
+        <div class="angle-card__image"><img src="${s.angles.front}" alt="${s.title}" loading="lazy"></div>
+        <div class="angle-card__body">
+          <div class="angle-card__title">${s.title}</div>
+          <div class="angle-card__price">${formatSum(s.price)}</div>
+          <button type="button" class="angle-card__btn">Смотреть ракурсы</button>
+        </div>
+      </article>`;
   }
 
-  function renderAngleStage(){
+  function renderAngleGrid(){
+    $('#anglesGrid').innerHTML = ANGLE_STYLES.map(angleCardHTML).join('');
+  }
+
+  function renderAngleModalViews(){
+    $('#angleModalViews').innerHTML = ['front', 'side', 'back'].map(a => `
+      <button type="button" class="angle-view${a === currentAngle ? ' is-active' : ''}" data-angle="${a}">${ANGLE_LABELS[a]}</button>`).join('');
+  }
+
+  function renderAngleModalContent(){
     const style = ANGLE_STYLES.find(s => s.id === currentAngleStyleId);
     if (!style) return;
-    $('#anglesImage').src = style.angles[currentAngle];
-    $('#anglesImage').alt = `${style.title} — ${ANGLE_LABELS[currentAngle]}`;
-    $('#anglesTitle').textContent = style.title;
-    $('#anglesPrice').textContent = formatSum(style.price);
-    $$('.angle-view', $('#anglesViews')).forEach(btn => btn.classList.toggle('is-active', btn.dataset.angle === currentAngle));
+    $('#angleModalImage').src = style.angles[currentAngle];
+    $('#angleModalImage').alt = `${style.title} — ${ANGLE_LABELS[currentAngle]}`;
+    $('#angleModalTitle').textContent = style.title;
+    $('#angleModalPrice').textContent = formatSum(style.price);
+    $('#angleModalDesc').textContent = style.desc;
+    $$('.angle-view', $('#angleModalViews')).forEach(btn => btn.classList.toggle('is-active', btn.dataset.angle === currentAngle));
   }
 
-  function renderAngleViews(){
-    $('#anglesViews').innerHTML = ['front', 'side', 'back'].map(a => `
-      <button type="button" class="angle-view${a === currentAngle ? ' is-active' : ''}" data-angle="${a}">${ANGLE_LABELS[a]}</button>`).join('');
+  function openAngleModal(id){
+    currentAngleStyleId = id;
+    currentAngle = 'front';
+    renderAngleModalViews();
+    renderAngleModalContent();
+    $('#angleModal').classList.add('is-open');
+    $('#angleModal').setAttribute('aria-hidden', 'false');
+    document.body.classList.add('no-scroll');
+  }
+
+  function closeAngleModal(){
+    $('#angleModal').classList.remove('is-open');
+    $('#angleModal').setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll');
   }
 
   function initAngleViewer(){
     if (!ANGLE_STYLES.length) return;
-    renderAnglePicker();
-    renderAngleViews();
-    renderAngleStage();
+    renderAngleGrid();
 
-    $('#anglesPicker').addEventListener('click', (e) => {
-      const btn = e.target.closest('.angle-thumb');
-      if (!btn) return;
-      currentAngleStyleId = btn.dataset.id;
-      currentAngle = 'front';
-      renderAnglePicker();
-      renderAngleViews();
-      renderAngleStage();
+    $('#anglesGrid').addEventListener('click', (e) => {
+      const card = e.target.closest('.angle-card');
+      if (!card) return;
+      openAngleModal(card.dataset.id);
     });
 
-    $('#anglesViews').addEventListener('click', (e) => {
+    $('#angleModalViews').addEventListener('click', (e) => {
       const btn = e.target.closest('.angle-view');
       if (!btn) return;
       currentAngle = btn.dataset.angle;
-      renderAngleStage();
+      renderAngleModalContent();
+    });
+
+    $('#angleModalClose').addEventListener('click', closeAngleModal);
+    $('#angleModalBackdrop').addEventListener('click', closeAngleModal);
+    $('#angleModalBookBtn').addEventListener('click', closeAngleModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && $('#angleModal').classList.contains('is-open')) closeAngleModal();
     });
   }
 

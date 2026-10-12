@@ -402,24 +402,29 @@
         <h2 class="section-title">Посмотрите стрижку с разных ракурсов</h2>
         <p class="section-sub">Выберите образ и переключайте ракурс — спереди, сбоку и сзади — прежде чем записаться.</p>
       </div>
-      <div class="angles__wrap reveal">
-        <div class="angles__picker" id="anglesPicker"></div>
-        <div class="angles__stage">
-          <div class="angles__frame">
-            <img id="anglesImage" src="" alt="">
-          </div>
-          <div class="angles__controls">
-            <div class="angles__views" id="anglesViews"></div>
-            <div class="angles__info">
-              <strong id="anglesTitle"></strong>
-              <span id="anglesPrice"></span>
-            </div>
-            <a href="#booking" class="btn btn--gold btn--sm" id="anglesBookBtn">Записаться</a>
-          </div>
-        </div>
-      </div>
+      <div class="angles__grid reveal" id="anglesGrid"></div>
     </div>
   </section>
+
+  <!-- Angle detail modal -->
+  <div class="angle-modal" id="angleModal" aria-hidden="true">
+    <div class="angle-modal__backdrop" id="angleModalBackdrop"></div>
+    <div class="angle-modal__panel">
+      <button class="angle-modal__close" id="angleModalClose" aria-label="Закрыть"><svg class="icon"><use href="#i-close"/></svg></button>
+      <div class="angle-modal__stage">
+        <div class="angle-modal__frame">
+          <img id="angleModalImage" src="" alt="">
+        </div>
+        <div class="angle-modal__views" id="angleModalViews"></div>
+      </div>
+      <div class="angle-modal__info">
+        <strong id="angleModalTitle"></strong>
+        <span id="angleModalPrice"></span>
+        <p id="angleModalDesc"></p>
+        <a href="#booking" class="btn btn--gold" id="angleModalBookBtn">Записаться на эту стрижку</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ============================= TESTIMONIALS ============================= -->
   <section class="reviews" id="reviews">

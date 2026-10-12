@@ -51,6 +51,20 @@ const SERVICES = [
   { id: 'facial', category: 'care', icon: 'facial', name: 'Уход за кожей лица', desc: 'Пилинг, маска, тонизирование — свежий вид без усталости.', duration: 35, price: 120000 },
   { id: 'hair-color', category: 'care', icon: 'color', name: 'Камуфляж седины на волосах', desc: 'Естественный тон, скрывает седину без эффекта окрашивания.', duration: 40, price: 130000 },
   { id: 'combo', category: 'care', icon: 'combo', name: 'Стрижка + Борода + Уход', desc: 'Полный комплекс для идеального образа со скидкой.', duration: 120, price: 250000, badge: 'Выгодно' },
+  // Авторские образы — фиксированная цена 120 000 сум за стрижку
+  { id: 'old-money', category: 'signature', icon: 'scissors', name: 'Аристократичная укладка', desc: 'Объёмный зачёс с лёгкой волной — элегантный образ в стиле «олд-мани».', duration: 60, price: 120000 },
+  { id: 'soft-slick-back', category: 'signature', icon: 'fade', name: 'Мягкий зачёс назад', desc: 'Гладкий зачёс с низким фейдом, без эффекта «мокрых волос».', duration: 60, price: 120000 },
+  { id: 'messy-quiff', category: 'signature', icon: 'crop', name: 'Растрёпанный кок', desc: 'Объёмный текстурный верх и аккуратный фейд по бокам.', duration: 60, price: 120000 },
+  { id: 'italian-style', category: 'signature', icon: 'korean', name: 'Итальянская укладка', desc: 'Мягкие волны, зачёсанные набок — элегантность без геля.', duration: 60, price: 120000 },
+  { id: 'crew-cut', category: 'signature', icon: 'crop', name: 'Текстурный кроп', desc: 'Короткий верх с текстурой и чистый фейд — универсальная классика.', duration: 60, price: 120000 },
+  { id: 'wolf-cut-v2', category: 'signature', icon: 'wolf', name: 'Вульф-кат с объёмом', desc: 'Многослойная текстурная стрижка с рваными краями и объёмом.', duration: 60, price: 120000 },
+  { id: 'side-part-fade', category: 'signature', icon: 'fade', name: 'Пробор с фейдом', desc: 'Чёткий боковой пробор и плавный фейд по бокам.', duration: 60, price: 120000 },
+  { id: 'modern-mullet-v2', category: 'signature', icon: 'wolf', name: 'Современный маллет', desc: 'Короткие виски и удлинённый затылок — акцент на структуре волос.', duration: 60, price: 120000 },
+  { id: 'long-low-taper', category: 'signature', icon: 'korean', name: 'Длинная стрижка с низким тейпером', desc: 'Длина сохраняется сверху, низкий тейпер по бокам для чистого контура.', duration: 60, price: 120000 },
+  { id: 'flower-perm', category: 'signature', icon: 'korean', name: 'Завивка «Цветок»', desc: 'Объёмная химическая завивка для естественных крупных локонов.', duration: 60, price: 120000 },
+  { id: 'long-bro-flow', category: 'signature', icon: 'korean', name: 'Длинная волнистая укладка', desc: 'Естественные волны, зачёсанные назад — свободный образ.', duration: 60, price: 120000 },
+  { id: 'shag-mullet', category: 'signature', icon: 'wolf', name: 'Рваный маллет', desc: 'Многослойная текстура с рваными прядями и лёгкой растрёпанностью.', duration: 60, price: 120000 },
+  { id: 'long-middle-part', category: 'signature', icon: 'korean', name: 'Длинный пробор по центру', desc: 'Длина до подбородка с пробором по центру — мягкий и смелый образ.', duration: 60, price: 120000 },
 ];
 
 const SERVICE_CATEGORIES = [
@@ -58,6 +72,7 @@ const SERVICE_CATEGORIES = [
   { id: 'hair', label: 'Стрижки' },
   { id: 'beard', label: 'Борода' },
   { id: 'care', label: 'Уход' },
+  { id: 'signature', label: 'Авторские образы' },
 ];
 
 /* ---- Мастера --------------------------------------------------------------*/
@@ -71,23 +86,26 @@ const BARBERS = [
 
 /* ---- Галерея работ ---------------------------------------------------------*/
 const GALLERY = [
-  { id: 'g1', category: 'hair', icon: 'wolf', photo: 'assets/gallery/modern-mullet.jpg', title: 'Вульф-кат / модерн-маллет', desc: 'Многослойная стрижка с рваными краями и объёмом на макушке.' },
-  { id: 'g2', category: 'hair', icon: 'fade', photo: 'assets/gallery/curly-fade-beard.jpg', title: 'Текстурный фейд с бородой', desc: 'Кудрявый объём сверху, чистый фейд по бокам и оформленная борода.' },
-  { id: 'g3', category: 'beard', icon: 'razor', photo: 'assets/gallery/razor-shave.jpg', title: 'Королевское бритьё', desc: 'Гладкая кожа, опасная бритва и уход горячим полотенцем.' },
-  { id: 'g4', category: 'hair', icon: 'korean', photo: 'assets/gallery/korean-cut.jpg', title: 'Корейская укладка', desc: 'Мягкая чёлка и естественный объём без укладки феном.' },
-  { id: 'g5', category: 'hair', icon: 'anime', photo: 'assets/gallery/anime-dark.jpg', title: 'Аниме-образ с тёмными прядями', desc: 'Острая текстура и глубокий тон в аниме-стилистике.' },
-  { id: 'g6', category: 'hair', icon: 'anime', photo: 'assets/gallery/anime-fringe.jpg', title: 'Аниме-стрижка с чёлкой', desc: 'Длинная асимметричная чёлка и драматичная текстура прядей.' },
-  { id: 'g7', category: 'hair', icon: 'bald', photo: 'assets/gallery/bald-fade.jpg', title: 'Лысина под бритву', desc: 'Идеально гладкая кожа головы и уход после бритья.' },
-  { id: 'g9', category: 'hair', icon: 'crop', photo: 'assets/gallery/classic-part.jpg', title: 'Классический пробор', desc: 'Аккуратная укладка на бок для делового образа.' },
-  { id: 'g10', category: 'kids', icon: 'kids', photo: 'assets/gallery/kids-fade.jpg', title: 'Детская стрижка с фейдом', desc: 'Аккуратный низкий фейд и текстурная макушка для мальчика.' },
-  { id: 'g11', category: 'hair', icon: 'fade', photo: 'assets/gallery/taper-fade-beard.jpg', title: 'Фейд с бородой', desc: 'Высокий фейд с чёткой линией роста волос и плотной бородой.' },
+  { id: 'old-money', category: 'classic', icon: 'scissors', photo: 'assets/gallery/old-money.jpg', title: 'Аристократичная укладка', desc: 'Объёмный зачёс с лёгкой волной в стиле «олд-мани».', price: 120000 },
+  { id: 'soft-slick-back', category: 'classic', icon: 'fade', photo: 'assets/gallery/soft-slick-back.jpg', title: 'Мягкий зачёс назад', desc: 'Гладкий зачёс с низким фейдом, без эффекта «мокрых волос».', price: 120000 },
+  { id: 'italian-style', category: 'classic', icon: 'korean', photo: 'assets/gallery/italian-style.jpg', title: 'Итальянская укладка', desc: 'Мягкие волны, зачёсанные набок — элегантность без геля.', price: 120000 },
+  { id: 'crew-cut', category: 'classic', icon: 'crop', photo: 'assets/gallery/crew-cut.jpg', title: 'Текстурный кроп', desc: 'Короткий верх с текстурой и чистый фейд.', price: 120000 },
+  { id: 'side-part-fade', category: 'classic', icon: 'fade', photo: 'assets/gallery/side-part-fade.jpg', title: 'Пробор с фейдом', desc: 'Чёткий боковой пробор и плавный фейд по бокам.', price: 120000 },
+  { id: 'messy-quiff', category: 'trendy', icon: 'crop', photo: 'assets/gallery/messy-quiff.jpg', title: 'Растрёпанный кок', desc: 'Объёмный текстурный верх и аккуратный фейд по бокам.', price: 120000 },
+  { id: 'wolf-cut-v2', category: 'trendy', icon: 'wolf', photo: 'assets/gallery/wolf-cut-v2.jpg', title: 'Вульф-кат с объёмом', desc: 'Многослойная текстурная стрижка с рваными краями.', price: 120000 },
+  { id: 'modern-mullet-v2', category: 'trendy', icon: 'wolf', photo: 'assets/gallery/modern-mullet-v2.jpg', title: 'Современный маллет', desc: 'Короткие виски и удлинённый затылок.', price: 120000 },
+  { id: 'long-low-taper', category: 'long', icon: 'korean', photo: 'assets/gallery/long-low-taper.jpg', title: 'Длинная стрижка с низким тейпером', desc: 'Длина сохраняется сверху, низкий тейпер по бокам.', price: 120000 },
+  { id: 'flower-perm', category: 'long', icon: 'korean', photo: 'assets/gallery/flower-perm.jpg', title: 'Завивка «Цветок»', desc: 'Объёмная химическая завивка для крупных локонов.', price: 120000 },
+  { id: 'long-bro-flow', category: 'long', icon: 'korean', photo: 'assets/gallery/long-bro-flow.jpg', title: 'Длинная волнистая укладка', desc: 'Естественные волны, зачёсанные назад.', price: 120000 },
+  { id: 'shag-mullet', category: 'long', icon: 'wolf', photo: 'assets/gallery/shag-mullet.jpg', title: 'Рваный маллет', desc: 'Многослойная текстура с рваными прядями.', price: 120000 },
+  { id: 'long-middle-part', category: 'long', icon: 'korean', photo: 'assets/gallery/long-middle-part.jpg', title: 'Длинный пробор по центру', desc: 'Длина до подбородка с пробором по центру.', price: 120000 },
 ];
 
 const GALLERY_CATEGORIES = [
   { id: 'all', label: 'Все работы' },
-  { id: 'hair', label: 'Стрижки' },
-  { id: 'beard', label: 'Борода' },
-  { id: 'kids', label: 'Дети' },
+  { id: 'classic', label: 'Классика' },
+  { id: 'trendy', label: 'Трендовые' },
+  { id: 'long', label: 'Длинные волосы' },
 ];
 
 /* ---- Отзывы -----------------------------------------------------------------*/

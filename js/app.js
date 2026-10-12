@@ -841,6 +841,7 @@
       <div class="gallery-card${item.photo ? ' has-photo' : ''}" data-id="${item.id}">
         <div class="gallery-card__visual">${galleryVisualHTML(item)}</div>
         <button class="gallery-card__zoom" aria-label="Открыть"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
+        ${item.price ? `<span class="gallery-card__price">${formatSum(item.price)}</span>` : ''}
         <div class="gallery-card__overlay">
           <span class="gallery-card__cat">${catLabel ? catLabel.label : ''}</span>
           <div class="gallery-card__title">${item.title}</div>
@@ -885,6 +886,13 @@
     $('#lightboxVisual').classList.toggle('has-photo', !!item.photo);
     $('#lightboxTitle').textContent = item.title;
     $('#lightboxDesc').textContent = item.desc;
+    const priceEl = $('#lightboxPrice');
+    if (item.price){
+      priceEl.textContent = formatSum(item.price);
+      priceEl.hidden = false;
+    } else {
+      priceEl.hidden = true;
+    }
   }
 
   function initGallery(){

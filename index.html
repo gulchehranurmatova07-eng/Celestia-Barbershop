@@ -84,6 +84,7 @@
       <a href="#services" class="nav__link">Услуги</a>
       <a href="#barbers" class="nav__link">Мастера</a>
       <a href="#gallery" class="nav__link">Галерея</a>
+      <a href="#angles" class="nav__link">Ракурсы</a>
       <a href="#reviews" class="nav__link">Отзывы</a>
       <a href="#contacts" class="nav__link">Контакты</a>
     </nav>
@@ -117,6 +118,7 @@
     <a href="#barbers" class="mobile-nav__link">Мастера</a>
     <a href="#queue" class="mobile-nav__link">Очередь</a>
     <a href="#gallery" class="mobile-nav__link">Галерея</a>
+    <a href="#angles" class="mobile-nav__link">Ракурсы</a>
     <a href="#reviews" class="mobile-nav__link">Отзывы</a>
     <a href="#faq" class="mobile-nav__link">Вопросы</a>
     <a href="#contacts" class="mobile-nav__link">Контакты</a>
@@ -389,6 +391,33 @@
       </div>
       <div class="tabs" id="galleryTabs" role="tablist" aria-label="Категории галереи"></div>
       <div class="gallery__grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============================= ANGLE VIEWER ============================= -->
+  <section class="angles" id="angles">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Со всех сторон</span>
+        <h2 class="section-title">Посмотрите стрижку с разных ракурсов</h2>
+        <p class="section-sub">Выберите образ и переключайте ракурс — спереди, сбоку и сзади — прежде чем записаться.</p>
+      </div>
+      <div class="angles__wrap reveal">
+        <div class="angles__picker" id="anglesPicker"></div>
+        <div class="angles__stage">
+          <div class="angles__frame">
+            <img id="anglesImage" src="" alt="">
+          </div>
+          <div class="angles__controls">
+            <div class="angles__views" id="anglesViews"></div>
+            <div class="angles__info">
+              <strong id="anglesTitle"></strong>
+              <span id="anglesPrice"></span>
+            </div>
+            <a href="#booking" class="btn btn--gold btn--sm" id="anglesBookBtn">Записаться</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

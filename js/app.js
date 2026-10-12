@@ -923,6 +923,61 @@
   }
 
   /* ----------------------------------------------------------------------
+     Просмотр стрижки с разных ракурсов
+  ---------------------------------------------------------------------- */
+  const ANGLE_LABELS = { front: 'Спереди', side: 'Сбоку', back: 'Сзади' };
+  const ANGLE_STYLES = GALLERY.filter(g => g.angles);
+  let currentAngleStyleId = ANGLE_STYLES[0] ? ANGLE_STYLES[0].id : null;
+  let currentAngle = 'front';
+
+  function renderAnglePicker(){
+    $('#anglesPicker').innerHTML = ANGLE_STYLES.map(s => `
+      <button type="button" class="angle-thumb${s.id === currentAngleStyleId ? ' is-active' : ''}" data-id="${s.id}">
+        <img src="${s.angles.front}" alt="${s.title}" loading="lazy">
+        <span>${s.title}</span>
+      </button>`).join('');
+  }
+
+  function renderAngleStage(){
+    const style = ANGLE_STYLES.find(s => s.id === currentAngleStyleId);
+    if (!style) return;
+    $('#anglesImage').src = style.angles[currentAngle];
+    $('#anglesImage').alt = `${style.title} — ${ANGLE_LABELS[currentAngle]}`;
+    $('#anglesTitle').textContent = style.title;
+    $('#anglesPrice').textContent = formatSum(style.price);
+    $$('.angle-view', $('#anglesViews')).forEach(btn => btn.classList.toggle('is-active', btn.dataset.angle === currentAngle));
+  }
+
+  function renderAngleViews(){
+    $('#anglesViews').innerHTML = ['front', 'side', 'back'].map(a => `
+      <button type="button" class="angle-view${a === currentAngle ? ' is-active' : ''}" data-angle="${a}">${ANGLE_LABELS[a]}</button>`).join('');
+  }
+
+  function initAngleViewer(){
+    if (!ANGLE_STYLES.length) return;
+    renderAnglePicker();
+    renderAngleViews();
+    renderAngleStage();
+
+    $('#anglesPicker').addEventListener('click', (e) => {
+      const btn = e.target.closest('.angle-thumb');
+      if (!btn) return;
+      currentAngleStyleId = btn.dataset.id;
+      currentAngle = 'front';
+      renderAnglePicker();
+      renderAngleViews();
+      renderAngleStage();
+    });
+
+    $('#anglesViews').addEventListener('click', (e) => {
+      const btn = e.target.closest('.angle-view');
+      if (!btn) return;
+      currentAngle = btn.dataset.angle;
+      renderAngleStage();
+    });
+  }
+
+  /* ----------------------------------------------------------------------
      Отзывы (слайдер)
   ---------------------------------------------------------------------- */
   let reviewIndex = 0;
@@ -1060,6 +1115,7 @@
     initQueue();
     initBooking();
     initGallery();
+    initAngleViewer();
     initReviews();
     initFaq();
     initContactForm();

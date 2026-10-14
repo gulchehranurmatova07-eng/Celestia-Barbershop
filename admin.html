@@ -179,6 +179,7 @@
       }
       const data = await res.json();
       if (!res.ok || !data.ok){
+        showDashboard();
         $('#dashError').textContent = data.error || 'Не удалось загрузить записи.';
         $('#dashError').hidden = false;
         return;

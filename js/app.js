@@ -689,6 +689,29 @@
     });
   }
 
+  function sendBookingToAdmin(bookingId){
+    // Сохраняет запись в базу для /admin.html. Работает только после деплоя
+    // на Vercel с подключённым хранилищем (см. api/bookings.js) — до этого
+    // просто тихо завершается ошибкой, не мешая клиенту оформить запись.
+    const barber = BARBERS.find(b => b.id === booking.barberId);
+    const payload = {
+      id: bookingId,
+      barber: barber ? barber.name : '',
+      services: selectedServicesList().map(s => s.name).join(', '),
+      date: booking.date,
+      time: booking.time,
+      name: booking.name,
+      phone: booking.phone,
+      comment: booking.comment,
+      total: totalPrice(),
+    };
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).catch(() => {});
+  }
+
   function downloadIcs(bookingId){
     const d = new Date(booking.date + 'T' + booking.time + ':00');
     const end = new Date(d.getTime() + totalDuration() * 60000);
@@ -789,6 +812,7 @@
       $('#successBookingId').textContent = bookingId;
       renderSummary('#successSummary', bookingId);
       sendTelegramNotification(bookingId);
+      sendBookingToAdmin(bookingId);
       const totalWaiting = queueState.reduce((s, q) => s + q.waiting + (q.busy ? 1 : 0), 0);
       $('#successQueue').innerHTML = `Ваша позиция в очереди на выбранное время: <b>#${totalWaiting + 1}</b>. Мы пришлём подтверждение на номер <b>${booking.phone}</b>.`;
       $('#bookingConfirmView').hidden = true;
